@@ -1,6 +1,8 @@
 package com.raiinmaker.tiktok_login_flutter
 
 import androidx.annotation.NonNull
+import com.bytedance.sdk.open.tiktok.TikTokOpenApiFactory
+import com.bytedance.sdk.open.tiktok.TikTokOpenConfig
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
@@ -23,15 +25,35 @@ class TiktokLoginFlutterPlugin: FlutterPlugin, MethodCallHandler {
     channel.setMethodCallHandler(this)
   }
 
+
+
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-    if (call.method == "getPlatformVersion") {
-      result.success("Android ${android.os.Build.VERSION.RELEASE}")
-    } else {
-      result.notImplemented()
+    when (call.method) {
+      "initializeTiktokLogin" -> initializeTiktokLogin(call = call, result = result)
+      else -> result.notImplemented()
+    }
+  }
+
+  private fun initializeTiktokLogin(call: MethodCall, result: Result) {
+    try {
+      val clientKey =  call.arguments as String
+      val tiktokOpenConfig = TikTokOpenConfig(clientKey)
+      TikTokOpenApiFactory.init(tiktokOpenConfig)
+      result.success(true)
+
+    } catch (e: Exception) {
+      result.error(
+              "FAILED_TO_INITIALIZE",
+              e.localizedMessage,
+              null
+      )
+
     }
   }
 
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
     channel.setMethodCallHandler(null)
   }
+
+
 }

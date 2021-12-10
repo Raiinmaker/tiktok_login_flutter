@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.raiinmaker.tiktok_login_flutter">
     <application>
-        <activity android:name=".t.TikTokEntryActivity"
-            android:exported="true" />
-        </activity>
+        <service
+            android:name=".tiktokapi.TikTokEntryActivity"
+            android:exported="true"/>
     </application>
 </manifest>
