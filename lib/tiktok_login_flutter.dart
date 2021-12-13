@@ -1,13 +1,19 @@
-
 import 'dart:async';
-
 import 'package:flutter/services.dart';
-
+//
 class TiktokLoginFlutter {
   static const MethodChannel _channel = MethodChannel('tiktok_login_flutter');
+  final _eventChannel = const EventChannel('tiktok_login_flutter_event');
 
-  static Future<String?> get platformVersion async {
-    final String? version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
+  static Future<void> initializeTiktokLogin(String clientKey) async {
+   var result = await _channel.invokeMethod('initializeTiktokLogin', clientKey);
   }
+  static Future<void> authorize() async {
+   await _channel.invokeMethod('authorize');
+  }
+
+  Stream get onResponse => _eventChannel
+      .receiveBroadcastStream()
+      .distinct()
+      .map((dynamic event) => event as String);
 }
