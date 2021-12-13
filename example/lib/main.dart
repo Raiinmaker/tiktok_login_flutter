@@ -29,11 +29,8 @@ class _MyAppState extends State<MyApp> {
         ),
         body:  Center(
           child:  TextButton(onPressed: () async {
-             await TiktokLoginFlutter.authorize();
-
-             // TiktokLoginFlutter().onResponse.listen((event) {
-             //   print(event);
-             // });
+             var code = await TiktokLoginFlutter.authorize();
+              print(code ?? "no cide");
 
           }, child: const Text("Authorize")),
         ),

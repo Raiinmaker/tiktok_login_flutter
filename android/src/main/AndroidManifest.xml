@@ -3,6 +3,8 @@
     <application>
         <activity
             android:name=".tiktokapi.TikTokEntryActivity"
-            android:exported="true"/>
+            android:exported="true">
+
+        </activity>
     </application>
 </manifest>

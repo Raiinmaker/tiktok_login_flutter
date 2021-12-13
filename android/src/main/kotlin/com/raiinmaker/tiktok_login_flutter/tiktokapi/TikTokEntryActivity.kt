@@ -9,22 +9,27 @@ import com.bytedance.sdk.open.tiktok.common.handler.IApiEventHandler
 import com.bytedance.sdk.open.tiktok.common.model.BaseReq
 import com.bytedance.sdk.open.tiktok.common.model.BaseResp
 import io.flutter.plugin.common.EventChannel
-
 import android.util.Log
+import io.flutter.plugin.common.MethodChannel
 
 
-internal class TikTokEntryActivity : Activity(), IApiEventHandler {
 
-    val messageStreamHandler = MessageStreamHandler()
+
+ class TikTokEntryActivity : Activity(), IApiEventHandler {
+
+//    val messageStreamHandler = MessageStreamHandler()
+
 
     companion object {
-        val instance = TikTokEntryActivity()
+        var result: MethodChannel.Result? = null;
     }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val ttOpenApi: TikTokOpenApi = TikTokOpenApiFactory.create(this)
         ttOpenApi.handleIntent(intent, this) // receive and parse callback
+//        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+//        getActionBar()?.hide();
     }
 
     override fun onReq(req: BaseReq) {
@@ -33,27 +38,32 @@ internal class TikTokEntryActivity : Activity(), IApiEventHandler {
     override fun onResp(resp: BaseResp) {
         Log.i("INFO", "Response recieved")
         if (resp is Authorization.Response) {
-            val response = resp
-            messageStreamHandler.send(resp.authCode)
+
+            result?.success(resp.authCode)
         }
+        this.finish()
     }
 
     override fun onErrorIntent(intent: Intent?) {
         Log.i("INFO", "onError called")
+        result?.error("AUTHORIZATION_ERROR", "Failed to get auth code", "");
+        this.finish()
     }
+
+
 }
-
-class MessageStreamHandler : EventChannel.StreamHandler {
-    private var eventSink: EventChannel.EventSink? = null
-    override fun onListen(arguments: Any?, sink: EventChannel.EventSink) {
-        eventSink = sink
-    }
-
-    fun send(code: String) {
-        eventSink?.success(code)
-    }
-
-    override fun onCancel(p0: Any?) {
-        eventSink = null
-    }
-}
+//
+//class MessageStreamHandler : EventChannel.StreamHandler {
+//    private var eventSink: EventChannel.EventSink? = null
+//    override fun onListen(arguments: Any?, sink: EventChannel.EventSink) {
+//        eventSink = sink
+//    }
+//
+//    fun send(code: String) {
+//        eventSink?.success(code)
+//    }
+//
+//    override fun onCancel(p0: Any?) {
+//        eventSink = null
+//    }
+//}

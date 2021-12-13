@@ -27,17 +27,14 @@ class TiktokLoginFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware 
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
   /// when the Flutter Engine is detached from the Activity
   private lateinit var channel : MethodChannel
-  private lateinit var eventChannel : EventChannel
   private var activity: Activity? = null
 
 
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "tiktok_login_flutter")
-    eventChannel = EventChannel(flutterPluginBinding.binaryMessenger,
-            "tiktok_login_flutter_event")
+
     channel.setMethodCallHandler(this)
-    eventChannel.setStreamHandler(TikTokEntryActivity.instance.messageStreamHandler)
 
     Log.i("INFO", "Initialized plugin")
   }
@@ -74,6 +71,7 @@ class TiktokLoginFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware 
 
 
       try {
+        TikTokEntryActivity.result = result
         val tiktokOpenApi: TikTokOpenApi = TikTokOpenApiFactory.create(activity)
         val request = Authorization.Request()
         request.scope = "user.info.basic"
@@ -81,7 +79,6 @@ class TiktokLoginFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware 
         request.callerLocalEntry = "com.raiinmaker.tiktok_login_flutter.tiktokapi.TikTokEntryActivity"
         Log.i("INFO", "Initialized request")
         tiktokOpenApi.authorize(request);
-        result.success(null)
       } catch (e: Exception) {
         result.error(
                 "FAILED_TO_INITIALIZE",
