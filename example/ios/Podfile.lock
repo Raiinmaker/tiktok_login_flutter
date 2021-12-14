@@ -2,10 +2,16 @@ PODS:
   - Flutter (1.0.0)
   - tiktok_login_flutter (0.0.1):
     - Flutter
+    - TikTokOpenSDK
+  - TikTokOpenSDK (5.0.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - tiktok_login_flutter (from `.symlinks/plugins/tiktok_login_flutter/ios`)
+
+SPEC REPOS:
+  trunk:
+    - TikTokOpenSDK
 
 EXTERNAL SOURCES:
   Flutter:
@@ -15,8 +21,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  tiktok_login_flutter: ac9325018ae3b5faac5b8565e6c00bc3909da844
+  tiktok_login_flutter: afcb28e37bbc05de4f5b35f37a318f88191a6cfc
+  TikTokOpenSDK: a63564ea4dc1fabc56352bf7aa9ddc386cdb63b6
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: a75497545d4391e2d394c3668e20cfb1c2bbd4aa
 
 COCOAPODS: 1.11.2
