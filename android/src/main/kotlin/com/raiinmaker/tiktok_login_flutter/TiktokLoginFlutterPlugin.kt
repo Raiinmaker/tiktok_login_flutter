@@ -12,9 +12,7 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
-import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import android.util.Log
 
 
 
@@ -29,17 +27,12 @@ class TiktokLoginFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware 
   private lateinit var channel : MethodChannel
   private var activity: Activity? = null
 
-
-
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "tiktok_login_flutter")
 
     channel.setMethodCallHandler(this)
 
-    Log.i("INFO", "Initialized plugin")
   }
-
-
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result:MethodChannel.Result) {
     when (call.method) {
@@ -54,12 +47,12 @@ class TiktokLoginFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware 
       val clientKey =  call.arguments as String
       val tiktokOpenConfig = TikTokOpenConfig(clientKey)
       TikTokOpenApiFactory.init(tiktokOpenConfig)
-      Log.i("INFO", "Initialized plugin")
+
       result.success(true)
 
     } catch (e: Exception) {
       result.error(
-              "FAILED_TO_INITIALIZE",
+              "INITIALIZATION_FAILED",
               e.localizedMessage,
               null
       )
@@ -69,19 +62,23 @@ class TiktokLoginFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware 
 
     private fun authorize(call: MethodCall, result: MethodChannel.Result) {
 
+      // passing result callback to TikTokEntryActivity for return the response
+      if(TikTokEntryActivity.result == null) {
+        TikTokEntryActivity.result = result
+      }
 
       try {
-        TikTokEntryActivity.result = result
+        val scope:String =  call.argument<String>("scope")!!
+
         val tiktokOpenApi: TikTokOpenApi = TikTokOpenApiFactory.create(activity)
         val request = Authorization.Request()
-        request.scope = "user.info.basic"
+        request.scope = scope
         request.state = "xxx"
         request.callerLocalEntry = "com.raiinmaker.tiktok_login_flutter.tiktokapi.TikTokEntryActivity"
-        Log.i("INFO", "Initialized request")
         tiktokOpenApi.authorize(request);
       } catch (e: Exception) {
         result.error(
-                "FAILED_TO_INITIALIZE",
+                "AUTHORIZATION_REQUEST_FAILED",
                 e.localizedMessage,
                 null
         )

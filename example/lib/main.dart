@@ -25,12 +25,12 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('TikTok Login Kit'),
         ),
         body:  Center(
           child:  TextButton(onPressed: () async {
-             var code = await TiktokLoginFlutter.authorize();
-              print(code ?? "no cide");
+             var code = await TiktokLoginFlutter.authorize("user.info.basic,video.list");
+              print(code);
 
           }, child: const Text("Authorize")),
         ),
