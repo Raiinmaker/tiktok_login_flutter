@@ -3,6 +3,10 @@ import UIKit
 import TikTokOpenSDK
 
 public class SwiftTiktokLoginFlutterPlugin: NSObject, FlutterPlugin {
+    
+    let viewController: UIViewController =
+        (UIApplication.shared.delegate?.window??.rootViewController)!;
+    
     public static func register(with registrar: FlutterPluginRegistrar) {
         
         
@@ -20,10 +24,10 @@ public class SwiftTiktokLoginFlutterPlugin: NSObject, FlutterPlugin {
             self.initializeTiktokLogin(call: call, result: result)
         case "authorize":
             self.authorize(call: call, result: result)
+        case "share":
+            self.share(call: call, result: result)
         default:
             result(FlutterMethodNotImplemented)
-            
-            
         }
     }
     
@@ -34,8 +38,7 @@ public class SwiftTiktokLoginFlutterPlugin: NSObject, FlutterPlugin {
     private func authorize(call: FlutterMethodCall, result: @escaping FlutterResult) {
         
         
-        let viewController: UIViewController =
-            (UIApplication.shared.delegate?.window??.rootViewController)!;
+        
         
         let args = call.arguments as! [String: Any]
         let scope = args["scope"] as! String
@@ -62,7 +65,36 @@ public class SwiftTiktokLoginFlutterPlugin: NSObject, FlutterPlugin {
         })
     }
     
+    let imagePickerController = UIImagePickerController()
+    var videoURL: NSURL?
     
+    private func share(call: FlutterMethodCall, result: @escaping FlutterResult) {
+        
+        guard let arguments = call.arguments as? [String:String],
+        let file:String = arguments["file"] else {
+            result(FlutterError(code: "INVALID ARGUMENTS", message: "Please provide right argumnets", details: nil))
+            return
+        }
+        
+    
+        let request = TikTokOpenSDKShareRequest()
+        request.mediaType = TikTokOpenSDKShareMediaType.video;
+        
+        print(file)
+        let mediaLocalIdentifiers: [String] = [file]
+        request.localIdentifiers = mediaLocalIdentifiers
+        
+        request.send(completionBlock: {resp -> Void in
+            print("recieved")
+            print(resp.isSucceed)
+            print(resp.description)
+            print(resp.errCode)
+            result(resp.isSucceed)
+        })
+        
+        
+       
+    }
     // app delegate functions
     //
     //
