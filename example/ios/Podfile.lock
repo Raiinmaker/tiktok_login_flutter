@@ -2,7 +2,7 @@ PODS:
   - Flutter (1.0.0)
   - tiktok_login_flutter (0.0.1):
     - Flutter
-    - TikTokOpenSDK (= 5.0.14)
+    - TikTokOpenSDK (~> 5.0.14)
   - TikTokOpenSDK (5.0.14)
 
 DEPENDENCIES:
@@ -21,7 +21,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  tiktok_login_flutter: 55113e6a7cb4437db4bde5757ad3ded6d9dcd26a
+  tiktok_login_flutter: 299882eb0bb33ba9bd3a3c1c71d1655d420f616b
   TikTokOpenSDK: 28f5244497b87cbaebb36d7ad468374ad2c2e8e2
 
 PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
