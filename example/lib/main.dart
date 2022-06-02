@@ -3,7 +3,7 @@ import 'package:tiktok_login_flutter/tiktok_login_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await TiktokLoginFlutter.initializeTiktokLogin("awtemju6r7rrj7z1");
+  await TiktokLoginFlutter.initializeTiktokLogin("xxxxxxxxx");
 
   runApp(const MyApp());
 

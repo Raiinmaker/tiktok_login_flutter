@@ -1,7 +1,8 @@
 name: tiktok_login_flutter
-description: A new Flutter project.
-version: 0.0.2
-homepage:
+description: TikTok login for flutter.
+version: 0.0.3
+homepage: https://github.com/Raiinmaker/tiktok_login_flutter
+repository: https://github.com/Raiinmaker/tiktok_login_flutter
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
