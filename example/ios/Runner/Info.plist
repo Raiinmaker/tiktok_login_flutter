@@ -49,17 +49,23 @@
         <string>snssdk1233</string>
     </array>
     <key>TikTokAppID</key>
-    <string>awtemju6r7rrj7z1</string>
+    <string>$INSERT YOUR CLIENT KEY HERE</string>
     <key>CFBundleURLTypes</key>
+    <!-- To Allow Tiktok Open your App -->
     <array>
-      <dict>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>awtemju6r7rrj7z1</string>
-        </array>
-      </dict>
+        <dict>
+            <key>CFBundleURLName</key>
+            <string>tiktok</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <!-- TikTok Client Key  $REPLEACE-->
+                <string>$INSERT YOUR CLIENT KEY HERE</string>
+            </array>
+        </dict>
     </array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>
 </plist>

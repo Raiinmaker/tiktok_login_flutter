@@ -4,11 +4,8 @@ import TikTokOpenSDK
 
 public class SwiftTiktokLoginFlutterPlugin: NSObject, FlutterPlugin {
     public static func register(with registrar: FlutterPluginRegistrar) {
-        
-        
-        
         let channel = FlutterMethodChannel(name: "tiktok_login_flutter", binaryMessenger: registrar.messenger())
-        let instance = SwiftTiktokLoginFlutterPlugin()
+        let instance: SwiftTiktokLoginFlutterPlugin = SwiftTiktokLoginFlutterPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
         registrar.addApplicationDelegate(instance)
         
